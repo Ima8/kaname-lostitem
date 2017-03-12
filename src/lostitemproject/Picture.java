@@ -1,14 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package lostitemproject;
 
-/**
- *
- * @author POOM
- */
 public class Picture {
+    private int pictureId;
+    private String path;
+
+    public int getPictureId() {
+        return pictureId;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
     
+    public void Picture(path) {
+        
+    }
+    
+    public String uploadPic() {
+        
+    }
 }
