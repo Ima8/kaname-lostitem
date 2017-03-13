@@ -16,11 +16,11 @@ public class Picture {
         this.path = path;
     }
     
-    public void Picture(path) {
+    public Picture(String path) {
         
     }
     
-    public String uploadPic() {
+    public void uploadPic() {
         
     }
 }

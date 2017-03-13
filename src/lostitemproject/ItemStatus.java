@@ -1,5 +1,7 @@
 package lostitemproject;
 
+import java.util.Date;
+
 public class ItemStatus {
     private int statusId;
     private String statusName;
@@ -36,7 +38,7 @@ public class ItemStatus {
     }
     
     public Date getStatusDate() {
-        return StatusDate;
+        return statusDate;
     }
     
     public void setStatusDate(Date statusDate) {

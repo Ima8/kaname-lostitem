@@ -16,7 +16,7 @@ public class LostItem {
     private String itemName;
     private String itemDescription;
     private String itemType;
-    private Status[] itemStatus;
+    private ItemStatus[] itemStatus;
     private String reporterName;
     private int reporterId;
     private static LostItem[] allLostItem=new LostItem[100];
@@ -30,7 +30,7 @@ public class LostItem {
         allLostItem[itemCount].itemType = itemType;
         allLostItem[itemCount].reporterName = reporterName;
         allLostItem[itemCount].reporterId = reporterId;
-        allLostItem[itemCount].itemStatus = new Status[20];
+        allLostItem[itemCount].itemStatus = new ItemStatus[20];
         allLostItem[itemCount].itemPicture = new Picture[20];
         itemCount++;     
     }
@@ -71,10 +71,10 @@ public class LostItem {
         return itemType;
     }
 
-    public Status[] getAllStatus() {
+    public ItemStatus[] getAllStatus() {
         return itemStatus;
     }
-    public Status getStatus(int index) {
+    public ItemStatus getStatus(int index) {
         return itemStatus[index];
     }
 
@@ -85,7 +85,7 @@ public class LostItem {
     public int getReporterId() {
         return reporterId;
     }
-//hello
+    
     public LostItem[] getAllLostItem() {
         return allLostItem;
     }
@@ -131,7 +131,10 @@ public class LostItem {
     
     @Override
     public String toString() {
-        return "LostItem{" + "itemId=" + itemId + ", itemName=" + itemName + ", itemDescription=" + itemDescription + ", itemType=" + itemType + ", itemStatus=" + itemStatus + ", reporterName=" + reporterName + ", reporterId=" + reporterId + ", allLostItem=" + allLostItem + ", itemPicture=" + itemPicture + '}';
+        return "LostItem{" + "itemId=" + itemId + ", itemName=" + itemName 
+                + ", itemDescription=" + itemDescription + ", itemType=" + itemType + ", itemStatus=" 
+                + itemStatus + ", reporterName=" + reporterName + ", reporterId=" 
+                + reporterId + ", allLostItem=" + allLostItem + ", itemPicture=" + itemPicture + '}';
     }
     
     
