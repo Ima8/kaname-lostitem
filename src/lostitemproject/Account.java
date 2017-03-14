@@ -8,10 +8,13 @@ public class Account {
     private String phone;
     private String line;
     private String email;
-   
-    public Account() {
-    }
     
+    //login >>> boolean
+    //
+    //getAccId return 10
+    public Account(){
+        
+    }
     
     
 }

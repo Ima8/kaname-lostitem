@@ -4,46 +4,32 @@ import java.util.Date;
 
 public class ItemStatus {
     private int statusId;
-    private String statusName;
-    private double latitude;
-    private double longitude;
+    private int statusName;
+    private int location;
     private Date statusDate;
+    
 
     
-    public boolean addNewStatus(int itemId,int statusId){
-        
-        // db 
-        
-        
+    public boolean addNewStatus(int itemId,int statusId,Date statusDate,int location){
+        //statusId >> 1=หาอยู่ 2=เจอแล้ว
+        //location >> 1=CBKMUTT 2=.....
+        // db  
         return false;
     }
-    public int getStatusId() {
+    public int getStatusId(int ItemId) {
+        // db
+        
         return statusId;
     }
-
-    public String getStatusName() {
+    //getLocation(ItemId)
+    public int getStatusName() {
         return statusName;
     }
 
-    public void setStatusName(String statusName) {
+    public void setStatusName(int statusName) {
         this.statusName = statusName;
     }
 
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(int latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(int longitude) {
-        this.longitude = longitude;
-    }
     
     public Date getStatusDate() {
         return statusDate;

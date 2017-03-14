@@ -20,7 +20,7 @@ public class Picture {
         
     }
     
-    public void uploadPic() {
+    public void uploadPic(){
         
     }
 }

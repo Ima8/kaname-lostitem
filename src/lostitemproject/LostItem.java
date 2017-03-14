@@ -17,15 +17,14 @@ public class LostItem {
     private int itemId;
     private String itemName;
     private String itemDescription;
-    private String itemType;
+    private int itemType;
     private ItemStatus[] itemStatus;
-    private String reporterName;
-    private int reporterId;
+    private int ownerId;
     private Picture[] itemPicture;
     private int pictureCount = 0;
 
-    public static void addNewLostItem(String itemName, String itemDescription, String itemType, String reporterName, int reporterId) {
-
+    public static void addNewLostItem(String itemName, String itemDescription, int itemType,int reporterId) {
+        
     }
 
     public void setItemName(String itemName) {
@@ -36,16 +35,12 @@ public class LostItem {
         this.itemDescription = itemDescription;
     }
 
-    public void setItemType(String itemType) {
+    public void setItemType(int itemType) {
         this.itemType = itemType;
     }
 
-    public void setReporterName(String reporterName) {
-        this.reporterName = reporterName;
-    }
-
-    public void setReporterId(int reporterId) {
-        this.reporterId = reporterId;
+    public void setOwnerId(int reporterId) {
+        this.ownerId = reporterId;
     }
 
     public int getItemId() {
@@ -60,24 +55,22 @@ public class LostItem {
         return itemDescription;
     }
 
-    public String getItemType() {
+    public int getItemType() {
         return itemType;
     }
 
-    public ItemStatus[] getAllStatus() {
+    /*public ItemStatus[] getAllStatus() {
         return itemStatus;
     }
 
     public ItemStatus getStatus(int index) {
         return itemStatus[index];
     }
+    */
+    
 
-    public String getReporterName() {
-        return reporterName;
-    }
-
-    public int getReporterId() {
-        return reporterId;
+    public int getOwnerId() {
+        return ownerId;
     }
 
     public ArrayList<LostItem> getAllLostItem() {
@@ -90,6 +83,9 @@ public class LostItem {
         LostItem l4 = new LostItem();
 
         l1.setItemName("gg");
+        for(){
+            
+        }
 
         allLostItem.add(l1);
         
@@ -98,7 +94,31 @@ public class LostItem {
         //return allLostItem
         return allLostItem;
     }
+    
+    public ArrayList<LostItem> getAllLostItemByLocate(int location) {
+        ArrayList<LostItem> allLostItem = new ArrayList<LostItem>();
+        //get db
+        //mapping 
+        LostItem l1 = new LostItem();
+        LostItem l2 = new LostItem();
+        LostItem l3 = new LostItem();
+        LostItem l4 = new LostItem();
+        
+        
+        l1.setItemName("gg");
+        for(){
+            
+        }
+        int thislocate = ItemStatus.getLocation(11.getItemId());
+        if(thislocate==location)
+            allLostItem.add(l1);
+        
+        
 
+        //return allLostItem
+        return allLostItem;
+    }
+    
     public LostItem[] getAllLostItemWithLimit(int startIndex, int endIndex) {
         int limit = endIndex - startIndex;
         LostItem[] lostItemWithLimit = new LostItem[limit];
@@ -110,12 +130,14 @@ public class LostItem {
 
     public LostItem[] getAllLostItemByUser(int reporterId) {
         LostItem[] lostItemList = new LostItem[20];
+        ArrayList al = new ArrayList();
         int process = 0;
         for (int i = 0; i < 20; i++) {
             for (int j = process; j < allLostItem.length; j++) {
                 if (allLostItem[process].reporterId == reporterId) {
                     lostItemList[i] = allLostItem[j];
                     process = j + 1;
+                    al.add(j);
                     break;
                 }
                 if (j == allLostItem.length - 1) {
@@ -124,8 +146,10 @@ public class LostItem {
                 }
             }
         }
-        return lostItemList;
+        return al;
     }
+    
+    
 
     public Picture[] getAllPicture() {
         return itemPicture;
@@ -135,13 +159,6 @@ public class LostItem {
         return itemPicture[index];
     }
 
-    public void changeStatus(String staName, Date staDate, int latitude, int longtitude) {
-
-    }
-
-    public void addItemPicture(String path) {
-        itemPicture[pictureCount] = new Picture(path);
-    }
 
     @Override
     public String toString() {
