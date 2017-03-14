@@ -1,4 +1,5 @@
 package lostitemproject;
+
 public class Account {
     private int accId;
     private String name;
@@ -7,10 +8,10 @@ public class Account {
     private String phone;
     private String line;
     private String email;
-    private LostItem[] itemLost;
-
+   
     public Account() {
     }
+    
     
     
 }

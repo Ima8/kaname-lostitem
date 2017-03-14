@@ -5,10 +5,18 @@ import java.util.Date;
 public class ItemStatus {
     private int statusId;
     private String statusName;
-    private int latitude;
-    private int longitude;
+    private double latitude;
+    private double longitude;
     private Date statusDate;
 
+    
+    public boolean addNewStatus(int itemId,int statusId){
+        
+        // db 
+        
+        
+        return false;
+    }
     public int getStatusId() {
         return statusId;
     }
@@ -21,7 +29,7 @@ public class ItemStatus {
         this.statusName = statusName;
     }
 
-    public int getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
@@ -29,7 +37,7 @@ public class ItemStatus {
         this.latitude = latitude;
     }
 
-    public int getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
