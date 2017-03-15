@@ -4,10 +4,20 @@ import java.util.Date;
 
 public class ItemStatus {
     private int statusId;
-    private int statusName;
+    private int status;
     private int location;
     private Date statusDate;
-    
+    private int itemId;
+
+    public ItemStatus(int statusId, int status, int location, Date statusDate,int itemId) {
+        this.statusId = statusId;
+        this.status = status;
+        this.location = location;
+        this.statusDate = statusDate;
+        this.itemId = itemId;
+    }
+
+
 
     
     public boolean addNewStatus(int itemId,int statusId,Date statusDate,int location){
@@ -22,12 +32,20 @@ public class ItemStatus {
         return statusId;
     }
     //getLocation(ItemId)
-    public int getStatusName() {
-        return statusName;
+    public int getStatus() {
+        return status;
     }
 
-    public void setStatusName(int statusName) {
-        this.statusName = statusName;
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     
@@ -38,5 +56,12 @@ public class ItemStatus {
     public void setStatusDate(Date statusDate) {
         this.statusDate = statusDate;
     }
-      
+    public int getLocation() {
+        return location;
+    }
+
+    public void setLocation(int location) {
+        this.location = location;
+    }
+    
 }

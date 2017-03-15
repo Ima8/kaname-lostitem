@@ -18,13 +18,24 @@ public class LostItem {
     private String itemName;
     private String itemDescription;
     private int itemType;
-    private ItemStatus[] itemStatus;
+    //private ItemStatus[] itemStatus;
     private int ownerId;
-    private Picture[] itemPicture;
+    //private Picture[] itemPicture;
     private int pictureCount = 0;
 
+    public LostItem(int itemId, String itemName, String itemDescription, int itemType, int ownerId) {
+        this.itemId = itemId;
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemType = itemType;
+        this.ownerId = ownerId;
+    }
+
+    public LostItem() {
+    }
+    
     public static void addNewLostItem(String itemName, String itemDescription, int itemType,int reporterId) {
-        
+        //ส่งข้อมูลเข้า db
     }
 
     public void setItemName(String itemName) {
@@ -68,7 +79,6 @@ public class LostItem {
     }
     */
     
-
     public int getOwnerId() {
         return ownerId;
     }
@@ -77,43 +87,42 @@ public class LostItem {
         ArrayList<LostItem> allLostItem = new ArrayList<LostItem>();
         //get db
         //mapping 
-        LostItem l1 = new LostItem();
-        LostItem l2 = new LostItem();
-        LostItem l3 = new LostItem();
-        LostItem l4 = new LostItem();
-
-        l1.setItemName("gg");
-        for(){
-            
-        }
-
-        allLostItem.add(l1);
+        allLostItem.add(new LostItem(0,"iphone4", "broken", 1,002));
+        allLostItem.add(new LostItem(1,"samsung", "can explode", 1,003));
+        allLostItem.add(new LostItem(2,"wallet", "have no money inside", 3,001));
+        allLostItem.add(new LostItem(3,"key", "blue color", 4,005));
         
-        
-
-        //return allLostItem
         return allLostItem;
     }
     
     public ArrayList<LostItem> getAllLostItemByLocate(int location) {
-        ArrayList<LostItem> allLostItem = new ArrayList<LostItem>();
+        ArrayList<LostItem> lostItemLocateFilter = new ArrayList<LostItem>();
         //get db
         //mapping 
-        LostItem l1 = new LostItem();
-        LostItem l2 = new LostItem();
-        LostItem l3 = new LostItem();
-        LostItem l4 = new LostItem();
+        LostItem l1 = new LostItem(0,"iphone4", "broken", 1,002);
+        LostItem l2 = new LostItem(1,"samsung", "can explode", 1,003);
+        LostItem l3 = new LostItem(2,"wallet", "have no money inside", 3,001);
+        LostItem l4 = new LostItem(3,"key", "blue color", 4,005);
+        LostItem[] allItemList = {l1,l2,l3,l4};
+        ArrayList<ItemStatus> allStatusList = ItemStatus.getAllItemStatus();
+//        ItemStatus[] allStatusList = {new ItemStatus(0, 0, 1, new Date(),0),
+//                                    new ItemStatus(1, 1, 1, new Date(),0),
+//                                    new ItemStatus(2, 1, 2, new Date(),1),
+//                                    new ItemStatus(3, 0, 3, new Date(),2)};
         
-        
-        l1.setItemName("gg");
-        for(){
-            
+        for(int i=0;i<allStatusList.size();i++){
+            if(allStatusList.get(i).getStatusId()==0){
+                if(allStatusList.get(i).getLocation()==location){
+                    for(int j=0;j<allItemList.length;j++){
+                        if(allStatusList.get(i).getItemId()==allItemList[j].getItemId()){
+                            lostItemLocateFilter.add(allItemList[j]);
+                        }
+                    }       
+                }
+            }else{
+                //เอาตัวที่หาเจอแล้ว(status==1)ออกจาก list
+            }
         }
-        int thislocate = ItemStatus.getLocation(11.getItemId());
-        if(thislocate==location)
-            allLostItem.add(l1);
-        
-        
 
         //return allLostItem
         return allLostItem;
