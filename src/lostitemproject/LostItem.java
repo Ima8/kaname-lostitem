@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package lostitemproject;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- *
- * @author POOM
- */
 public class LostItem {
 
     private int itemId;
@@ -82,7 +73,8 @@ public class LostItem {
     public int getOwnerId() {
         return ownerId;
     }
-
+    
+/*
     public ArrayList<LostItem> getAllLostItem() {
         ArrayList<LostItem> allLostItem = new ArrayList<LostItem>();
         //get db
@@ -176,5 +168,5 @@ public class LostItem {
                 + itemStatus + ", reporterName=" + reporterName + ", reporterId="
                 + reporterId + ", allLostItem=" + allLostItem + ", itemPicture=" + itemPicture + '}';
     }
-
+*/
 }

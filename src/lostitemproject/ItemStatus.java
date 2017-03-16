@@ -27,8 +27,7 @@ public class ItemStatus {
         return false;
     }
     public int getStatusId(int ItemId) {
-        // db
-        
+        // db  
         return statusId;
     }
     //getLocation(ItemId)

@@ -16,12 +16,13 @@ public class TestProject {
         String str2="hello";
         System.out.println(str1.equals(str2));
         
+       /* 
         boolean loginSuccess = user.login("poom","yeah");
         while(!loginSuccess){
             loginSuccess = user.login("poom","yeah");
         }
         LostItem.addNewLostItem(String itemName, String itemDescription, int itemType,user.getAccId())
-        
+        */
         
         /*
         //เริ่มต้นโดยกำหนดตัวแปร Type Image เป็น null
