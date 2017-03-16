@@ -42,7 +42,7 @@ public class Picture {
         //logic
         //url = ....
         //return ImageIO.read(url);
-    public BufferedImage getPicture(int itemId){
+    public static BufferedImage getPicture(int itemId){
         BufferedImage image = null;
         URL url;
         try {

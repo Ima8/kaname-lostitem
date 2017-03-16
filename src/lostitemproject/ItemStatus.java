@@ -5,6 +5,7 @@
  */
 package lostitemproject;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -12,10 +13,20 @@ import java.util.Date;
  * @author User
  */
 public class ItemStatus {
+    private int statusId;
+    private boolean statusFound;
     private int location;
     private Date statusDate;
-    private boolean statusFound;
     private int itemId;
+
+    public ItemStatus(int statusId, boolean statusFound, int location, Date statusDate, int itemId) {
+        this.statusId = statusId;
+        this.statusFound = statusFound;
+        this.location = location;
+        this.statusDate = statusDate;
+        this.itemId = itemId;
+    }
+    
     
     public boolean getStatusFound() {
         return statusFound;
@@ -56,6 +67,21 @@ public class ItemStatus {
         
         
         return true;
+    }
+    public static ArrayList<ItemStatus> getAllItemStatus(){
+        ArrayList<ItemStatus> allStatusList = new ArrayList<ItemStatus>();
+        allStatusList.add(new ItemStatus(0, false, 1, new Date(),0)); 
+        allStatusList.add(new ItemStatus(1, true, 1, new Date(),1));
+        allStatusList.add(new ItemStatus(2, true, 2, new Date(),2));
+        allStatusList.add(new ItemStatus(3, false, 3, new Date(),3));
+        
+        return allStatusList;
+    }
+
+    @Override
+    public String toString() {
+        return "statusId = " + statusId + "\nstatusFound = " + statusFound +
+                "\nlocation = " + location + "\nstatusDate = " + statusDate + "\nitemId = " + itemId+"\n";
     }
         
     

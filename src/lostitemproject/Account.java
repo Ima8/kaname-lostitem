@@ -18,7 +18,8 @@ public class Account {
 
     }
 
-    public Account(String name, String surname, String username,String password, String phone, String line, String email) {
+    public Account(int accId,String name, String surname, String username,String password, String phone, String line, String email) {
+        this.accId = accId;
         this.name = name;
         this.surname = surname;
         this.username = username;
