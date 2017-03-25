@@ -1,5 +1,6 @@
 package lostitemproject;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -21,8 +22,30 @@ public class LostItem {
         this.ownerId = ownerId;
     } 
 
-    public static void addNewLostItem(String itemName, String itemDescription, int itemType,int ownerId,int location) { 
-        //ส่งข้อมูลเข้า db 
+    public static void addNewLostItem(String itemName, String itemDesc, int itemType,int ownerId,int location,int cate) { 
+        Connection conn=null;
+        Statement stm=null;
+        int itemId=1,dateId=1,statusId=1;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("Load Driver Success.");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kanameproject","root","");
+            System.out.println("Connect Successful.");
+            stm = conn.createStatement();
+            stm.execute("insert into item value ('"+itemId+"','"+itemName+"','"+itemDesc+"','"+statusId+"','"+ownerId+"','"+1+"','"+cate+"')");
+            System.out.println("execute success.");
+        }catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }finally{            
+            try {
+                if(conn!=null)
+                    conn.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
     } 
  
     public void setItemName(String itemName) { 
@@ -61,10 +84,6 @@ public class LostItem {
         return ownerId; 
     } 
 
-        
-            
-          
- 
     public static ArrayList<LostItem> getAllLostItem() { 
         ArrayList<LostItem> allLostItem = new ArrayList<LostItem>(); 
         //get db 
@@ -77,14 +96,14 @@ public class LostItem {
         return allLostItem;
     } 
      
-    public static ArrayList<LostItem> getAllLostItemByLocate(int location) { 
+    public static ArrayList<LostItem> getAllLostItemByLocate(int locationId) { 
         ArrayList<LostItem> lostItemFilterLocate = new ArrayList<LostItem>(); 
         //get db 
         //mapping
         ArrayList<LostItem> allItemList = getAllLostItem();
         ArrayList<ItemStatus> allStatusList = ItemStatus.getAllItemStatus();     
         for(int i=0;i<allStatusList.size();i++){ 
-            if(allStatusList.get(i).getLocation()==location){
+            if(allStatusList.get(i).getLocationId()==locationId){
                 lostItemFilterLocate.add(allItemList.get(i));
             }
         }
