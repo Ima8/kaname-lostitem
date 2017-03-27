@@ -32,7 +32,8 @@ public class LostItem {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kanameproject","root","");
             System.out.println("Connect Successful.");
             stm = conn.createStatement();
-            stm.execute("insert into item value ('"+itemId+"','"+itemName+"','"+itemDesc+"','"+statusId+"','"+ownerId+"','"+1+"','"+cate+"')");
+            stm.execute("insert into item (itemId,itemName,itenmDes,Accout_userID,Date_dateId,Cate_cateId) "
+                    + "value ('"+itemId+"','"+itemName+"','"+itemDesc+"','"+ownerId+"','"+0+"','"+cate+"')");
             System.out.println("execute success.");
         }catch(ClassNotFoundException e){
             e.printStackTrace();
