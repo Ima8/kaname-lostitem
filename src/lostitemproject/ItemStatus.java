@@ -5,6 +5,8 @@
  */
 package lostitemproject;
 
+import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -15,14 +17,19 @@ import java.util.Date;
 public class ItemStatus {
     private int statusId;
     private boolean statusFound;
-    private int location;
+    private int locationId;
+    private int locationName;
     private Date statusDate;
     private int itemId;
 
-    public ItemStatus(int statusId, boolean statusFound, int location, Date statusDate, int itemId) {
+    public ItemStatus() {
+    }
+
+    
+    public ItemStatus(int statusId, boolean statusFound, int locationId, Date statusDate, int itemId) {
         this.statusId = statusId;
         this.statusFound = statusFound;
-        this.location = location;
+        this.locationId = locationId;
         this.statusDate = statusDate;
         this.itemId = itemId;
     }
@@ -36,12 +43,12 @@ public class ItemStatus {
         this.statusFound = status;
     }
 
-    public int getLocation() {
-        return location;
+    public int getLocationId() {
+        return locationId;
     }
 
-    public void setLocation(int location) {
-        this.location = location;
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
     }
 
     public Date getStatusDate() {
@@ -52,36 +59,31 @@ public class ItemStatus {
         this.statusDate = statusDate;
     }
      
-    /*
-    public void changeStatus(){
-        this.statusFound = true;
+
+    public static void addStatus(int location,int itemId,int accountId,int status)
+                throws SQLException,ClassNotFoundException{        
+        Connection conn=null; 
+        Statement stm=null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String statusDate = sdf.format(new Date());
+        Class.forName("com.mysql.jdbc.Driver");
+        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kaname_db","root","");
+        stm = conn.createStatement();
+        stm.execute("insert into itemstatus (itemStatusDate,Location_locationId,Item_itemId,Accout_userID,Status_statusID)"
+                + "value ('"+statusDate+"',"+location+","+itemId+","+accountId+","+status+")");
+        if(conn!=null)
+            conn.close();
     }
-    */
-    
-    public static boolean changeStatus(int itemId,boolean statusFound){
+    public static ItemStatus getItemStatus(){
+        ItemStatus stat = new ItemStatus();
         
-        
-        return true;
-    }
-    public static boolean addStatus(int location,int itemId,Date statusDate){
-        
-        
-        return true;
-    }
-    public static ArrayList<ItemStatus> getAllItemStatus(){
-        ArrayList<ItemStatus> allStatusList = new ArrayList<ItemStatus>();
-        allStatusList.add(new ItemStatus(0, false, 1, new Date(),0)); 
-        allStatusList.add(new ItemStatus(1, true, 1, new Date(),1));
-        allStatusList.add(new ItemStatus(2, true, 2, new Date(),2));
-        allStatusList.add(new ItemStatus(3, false, 3, new Date(),3));
-        
-        return allStatusList;
+        return stat;
     }
 
     @Override
     public String toString() {
         return "statusId = " + statusId + "\nstatusFound = " + statusFound +
-                "\nlocation = " + location + "\nstatusDate = " + statusDate + "\nitemId = " + itemId+"\n";
+                "\nlocationId = " + locationId + "\nstatusDate = " + statusDate + "\nitemId = " + itemId+"\n";
     }
         
     
