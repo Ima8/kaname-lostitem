@@ -48,13 +48,16 @@ public class ViewLostItem {
             for(int i=0;i<item.length;i++){
                 System.out.println((i+1)+"."+item[i]);
             }
-            System.out.print("select Item (number) : ");
+            System.out.print("inspect Item (select number) : ");
             input = sc.nextInt();
-            ItemStatus stat = ItemStatus.getItemStatus();
+            ItemStatus stat = ItemStatus.getItemStatus(item[input-1].getItemId());
+            System.out.println(stat);
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
+        } catch (ArrayIndexOutOfBoundsException ex){
+            System.out.println("Invalid Input -> Data not found.");
         }
     }
 }

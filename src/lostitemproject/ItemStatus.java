@@ -16,11 +16,13 @@ import java.util.Date;
  */
 public class ItemStatus {
     private int statusId;
-    private boolean statusFound;
+//    private boolean statusFound;
     private int locationId;
-    private int locationName;
+    private String locationName;
     private Date statusDate;
     private int itemId;
+    private String statusName;
+    private String ownerName;
 
     public ItemStatus() {
     }
@@ -28,20 +30,20 @@ public class ItemStatus {
     
     public ItemStatus(int statusId, boolean statusFound, int locationId, Date statusDate, int itemId) {
         this.statusId = statusId;
-        this.statusFound = statusFound;
+//        this.statusFound = statusFound;
         this.locationId = locationId;
         this.statusDate = statusDate;
         this.itemId = itemId;
     }
     
     
-    public boolean getStatusFound() {
-        return statusFound;
-    }
-
-    public void setStatusFound(boolean status) {
-        this.statusFound = status;
-    }
+//    public boolean getStatusFound() {
+//        return statusFound;
+//    }
+//
+//    public void setStatusFound(boolean status) {
+//        this.statusFound = status;
+//    }
 
     public int getLocationId() {
         return locationId;
@@ -74,16 +76,76 @@ public class ItemStatus {
         if(conn!=null)
             conn.close();
     }
-    public static ItemStatus getItemStatus(){
+    public static ItemStatus getItemStatus(int itemId)
+            throws SQLException,ClassNotFoundException{
         ItemStatus stat = new ItemStatus();
+        Connection conn=null; 
+        Statement stm=null;
+        Class.forName("com.mysql.jdbc.Driver");
+        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kaname_db","root","");
+        stm = conn.createStatement();
+        ResultSet rs = stm.executeQuery("select * from itemstatus INNER JOIN location ON itemstatus.Location_locationId=location.locationId"
+                + " INNER JOIN accout ON itemstatus.Accout_userID=accout.userID"
+                + " INNER JOIN status ON itemstatus.Status_statusId=status.statusId where Item_itemId="+itemId);
         
+        rs.next();
+        stat.setStatusId(rs.getInt("itemStatusId"));
+        stat.setStatusDate(rs.getDate("itemStatusDate"));
+        stat.setLocationName(rs.getString("locationName"));
+        stat.setItemId(rs.getInt("Item_itemId"));
+        stat.setOwnerName(rs.getString("userName"));
+        stat.setStatusName(rs.getString("statusName"));
+        
+        if(conn!=null)
+            conn.close();
+         
         return stat;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     @Override
     public String toString() {
-        return "statusId = " + statusId + "\nstatusFound = " + statusFound +
-                "\nlocationId = " + locationId + "\nstatusDate = " + statusDate + "\nitemId = " + itemId+"\n";
+        return "StatusName = "+statusName+"\nlocationName = " + locationName + "\nstatusDate = " + statusDate + "\nitemId = " + itemId+"\n"
+                + "Owner status = "+ownerName;
     }
         
     
