@@ -17,11 +17,11 @@ import java.util.logging.Logger;
 public class ViewLostItem {
     public static void run(){
         Scanner sc = new Scanner(System.in);
-        int input;
+        int input,accountId=1;
         try {
             String condition = "";
             System.out.println("1 - View my item\n2 - View all item");
-            System.out.print("choose (number) : ");
+            System.out.print("Choose (number) : ");
             input=sc.nextInt();
             if(input==1){
                 
@@ -48,10 +48,28 @@ public class ViewLostItem {
             for(int i=0;i<item.length;i++){
                 System.out.println((i+1)+"."+item[i]);
             }
-            System.out.print("inspect Item (select number) : ");
+            System.out.print("Inspect Item (select number) : ");
+            int focusItem = sc.nextInt();
+            ItemStatus stat = ItemStatus.getItemStatus(item[focusItem-1].getItemId());
+            System.out.println(stat);    
+            System.out.println("1 - change status\n2 - back");
+            System.out.print("Choose (number) : ");
             input = sc.nextInt();
-            ItemStatus stat = ItemStatus.getItemStatus(item[input-1].getItemId());
-            System.out.println(stat);
+            while(input==1){                                                
+                if(item[focusItem-1].getOwnerId()==accountId){
+                    System.out.println("1 - Lost\n2 - Found\n3 - Received");
+                    System.out.print("Choose (number) : ");
+                    ItemStatus.addStatus(stat.getLocationId(), stat.getItemId(), accountId,sc.nextInt());                   
+                    System.out.println("Change Status Completed.");
+                    stat = ItemStatus.getItemStatus(item[focusItem-1].getItemId());
+                    System.out.println(stat);                                
+                }else{
+                    System.out.println("You don't have permission to change status this item.");
+                }
+                System.out.println("1 - change status\n2 - back");
+                System.out.print("Choose (number) : ");
+                input = sc.nextInt();
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {

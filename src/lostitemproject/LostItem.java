@@ -11,7 +11,7 @@ public class LostItem {
     private String itemDescription;
 //    private int itemType;
     private String cate;
-//    private int ownerId;
+    private int ownerId;
     private String ownerName;
     private Date dateStart;
     private Date dateEnd;
@@ -24,7 +24,7 @@ public class LostItem {
         this.itemDescription = itemDescription; 
 //        this.itemType = itemType; 
         this.cate = cate;
-//        this.ownerId = ownerId;
+        this.ownerId = ownerId;
     } 
 
     public String getOwnerName() {
@@ -71,10 +71,10 @@ public class LostItem {
         this.cate = cate;
     }
 
-//    }
-//    public void setOwnerId(int reporterId) {
-//        this.ownerId = reporterId;
-//    }
+    
+    public void setOwnerId(int reporterId) {
+        this.ownerId = reporterId;
+    }
  
     public int getItemId() { 
         return itemId; 
@@ -96,9 +96,9 @@ public class LostItem {
         this.itemId = itemId;
     }
  
-//    public int getOwnerId() { 
-//        return ownerId; 
-//    } 
+    public int getOwnerId() { 
+        return ownerId; 
+    } 
 
     public static LostItem[] getAllLostItem(String condition) 
             throws SQLException,ClassNotFoundException{ 
@@ -108,9 +108,12 @@ public class LostItem {
         Class.forName("com.mysql.jdbc.Driver");
         conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kaname_db","root","");
         stm = conn.createStatement();
-        ResultSet rs = stm.executeQuery("select item.*,cate.*,itemStatus.Location_locationId,accout.userName from item INNER JOIN cate " +
-            "ON item.Cate_cateId=cate.cateId INNER JOIN itemstatus ON itemstatus.Item_itemId=item.itemId "
-                + "INNER JOIN accout ON item.Accout_userID=accout.userID "+condition);
+        ResultSet rs = stm.executeQuery("select item.itemId ,cate.cateName ,accout.userName ,item.itemName ,item.itenmDes "
+                + ",accout.userID as OwnerId ,accout.userName as Owner_name ,item.DateStart,item.DateEnd "
+                + ",itemstatus.itemStatusDate=max(itemstatus.itemStatusDate) from item INNER JOIN cate ON item.Cate_cateId=cate.cateId"
+                + " INNER JOIN itemstatus ON itemstatus.Item_itemId=item.itemId INNER JOIN accout ON item.Accout_userID=accout.userID"
+                + " GROUP BY item.itemId");                
+//                + "INNER JOIN accout ON item.Accout_userID=accout.userID "+condition);
         while(rs.next()){
             LostItem tmp = new LostItem();
             tmp.setItemId(rs.getInt("itemId"));
@@ -119,7 +122,8 @@ public class LostItem {
             tmp.setItemDescription(rs.getString("itenmDes"));
             tmp.setDateStart(rs.getDate("dateStart"));
             tmp.setDateEnd(rs.getDate("dateEnd"));
-            tmp.setOwnerName(rs.getString("userName"));
+            tmp.setOwnerName(rs.getString("Owner_name"));
+            tmp.setOwnerId(rs.getInt("OwnerId"));
             allLostItem.add(tmp);
         }
         if(conn!=null)

@@ -19,7 +19,7 @@ public class ItemStatus {
 //    private boolean statusFound;
     private int locationId;
     private String locationName;
-    private Date statusDate;
+    private Date lastUpdate;
     private int itemId;
     private String statusName;
     private String ownerName;
@@ -28,11 +28,11 @@ public class ItemStatus {
     }
 
     
-    public ItemStatus(int statusId, boolean statusFound, int locationId, Date statusDate, int itemId) {
+    public ItemStatus(int statusId, boolean statusFound, int locationId, Date lastUpdate, int itemId) {
         this.statusId = statusId;
 //        this.statusFound = statusFound;
         this.locationId = locationId;
-        this.statusDate = statusDate;
+        this.lastUpdate = lastUpdate;
         this.itemId = itemId;
     }
     
@@ -53,12 +53,12 @@ public class ItemStatus {
         this.locationId = locationId;
     }
 
-    public Date getStatusDate() {
-        return statusDate;
+    public Date getLastUpdate() {
+        return lastUpdate;
     }
 
-    public void setStatusDate(Date statusDate) {
-        this.statusDate = statusDate;
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
      
 
@@ -84,17 +84,28 @@ public class ItemStatus {
         Class.forName("com.mysql.jdbc.Driver");
         conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kaname_db","root","");
         stm = conn.createStatement();
-        ResultSet rs = stm.executeQuery("select * from itemstatus INNER JOIN location ON itemstatus.Location_locationId=location.locationId"
+//        ResultSet rs = stm.executeQuery("select itemstatus.itemStatusId,itemstatus.itemStatusDate=max(itemstatus.itemStatusDate)"
+//                + ",itemstatus.itemStatusDate,location.locationId,location.locationName,itemstatus.Item_itemId,accout.userName"
+//                + ",status.statusName from itemstatus INNER JOIN location ON itemstatus.Location_locationId=location.locationId"
+//                + " INNER JOIN accout ON itemstatus.Accout_userID=accout.userID"
+//                + " INNER JOIN status ON itemstatus.Status_statusId=status.statusId"
+//                + " WHERE itemstatus.Item_itemId="+itemId);
+
+        ResultSet rs = stm.executeQuery("select itemstatus.itemStatusId,itemstatus.itemStatusDate as lastUpdate"
+                + ",location.locationId,location.locationName,itemstatus.Item_itemId,accout.userName"
+                + ",status.statusName from itemstatus INNER JOIN location ON itemstatus.Location_locationId=location.locationId"
                 + " INNER JOIN accout ON itemstatus.Accout_userID=accout.userID"
-                + " INNER JOIN status ON itemstatus.Status_statusId=status.statusId where Item_itemId="+itemId);
+                + " INNER JOIN status ON itemstatus.Status_statusId=status.statusId"
+                + " WHERE (itemstatus.Item_itemId, itemstatus.itemStatusId) IN (SELECT itemstatus.Item_itemId, Max(itemstatus.itemStatusId) FROM itemstatus GROUP BY itemstatus.Item_itemId) AND itemstatus.Item_itemId="+itemId);
         
         rs.next();
         stat.setStatusId(rs.getInt("itemStatusId"));
-        stat.setStatusDate(rs.getDate("itemStatusDate"));
+        stat.setLastUpdate(rs.getDate("lastUpdate"));
         stat.setLocationName(rs.getString("locationName"));
         stat.setItemId(rs.getInt("Item_itemId"));
         stat.setOwnerName(rs.getString("userName"));
         stat.setStatusName(rs.getString("statusName"));
+        stat.setLocationId(rs.getInt("locationId"));
         
         if(conn!=null)
             conn.close();
@@ -144,7 +155,7 @@ public class ItemStatus {
 
     @Override
     public String toString() {
-        return "StatusName = "+statusName+"\nlocationName = " + locationName + "\nstatusDate = " + statusDate + "\nitemId = " + itemId+"\n"
+        return "StatusName = "+statusName+"\nlocationName = " + locationName + "\nlastUpdate = " + lastUpdate + "\nitemId = " + itemId+"\n"
                 + "Owner status = "+ownerName;
     }
         
