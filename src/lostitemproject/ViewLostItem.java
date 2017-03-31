@@ -17,34 +17,32 @@ import java.util.logging.Logger;
 public class ViewLostItem {
     public static void run(){
         Scanner sc = new Scanner(System.in);
-        int input,accountId=1;
+        int input,accountId=2;
         try {
             String condition = "";
             System.out.println("1 - View my item\n2 - View all item");
             System.out.print("Choose (number) : ");
             input=sc.nextInt();
             if(input==1){
-                
+                condition="AND item.Accout_userID="+accountId;
             }else{
                 System.out.println("===category list===\n0 - All Category\n1 - device\n2 - costume\n3 - Bag\n4 - Key\n5 - Other");
                 System.out.print("Enter Item category (number) : ");
                 input = sc.nextInt();              
                 if(input!=0){
-                    condition="Where Cate_cateId="+input;
+                    condition="AND Cate_cateId="+input;
                 }
 
                 System.out.println("===location list===\n0.All Location\n1.SIT Building\n2.KFC\n3.CB1\n4.CB2");
                 System.out.print("Enter location (number) : ");
                 input = sc.nextInt();
-                if(input!=0){
-                    if(condition.equals("")){
-                        condition="Where Location_locationId="+input;
-                    }else{
-                        condition+=" AND Location_locationId="+input;
-                    }
+                if(input!=0){        
+                    condition+=" AND Location_locationId="+input;                   
                 }
             }
-            LostItem item[] = LostItem.getAllLostItem(condition);
+            System.out.print("===Order By===\n1 - Newest First.\n2 - Oldest first.\nChoose (number) : ");
+            String orderBy=(sc.nextInt()==1?"DESC":"ASC");
+            LostItem item[] = LostItem.getAllLostItem(condition,orderBy);
             for(int i=0;i<item.length;i++){
                 System.out.println((i+1)+"."+item[i]);
             }

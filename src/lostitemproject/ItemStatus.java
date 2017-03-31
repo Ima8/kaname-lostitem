@@ -96,7 +96,9 @@ public class ItemStatus {
                 + ",status.statusName from itemstatus INNER JOIN location ON itemstatus.Location_locationId=location.locationId"
                 + " INNER JOIN accout ON itemstatus.Accout_userID=accout.userID"
                 + " INNER JOIN status ON itemstatus.Status_statusId=status.statusId"
-                + " WHERE (itemstatus.Item_itemId, itemstatus.itemStatusId) IN (SELECT itemstatus.Item_itemId, Max(itemstatus.itemStatusId) FROM itemstatus GROUP BY itemstatus.Item_itemId) AND itemstatus.Item_itemId="+itemId);
+                + " WHERE (itemstatus.Item_itemId, itemstatus.itemStatusDate) IN"
+                + " (SELECT itemstatus.Item_itemId, Max(itemstatus.itemStatusDate)"
+                + " FROM itemstatus GROUP BY itemstatus.Item_itemId) AND itemstatus.Item_itemId="+itemId);
         
         rs.next();
         stat.setStatusId(rs.getInt("itemStatusId"));

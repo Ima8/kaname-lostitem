@@ -100,7 +100,7 @@ public class LostItem {
         return ownerId; 
     } 
 
-    public static LostItem[] getAllLostItem(String condition) 
+    public static LostItem[] getAllLostItem(String filter,String orderBy) 
             throws SQLException,ClassNotFoundException{ 
         ArrayList<LostItem> allLostItem = new ArrayList<LostItem>(); 
         Connection conn=null; 
@@ -108,12 +108,17 @@ public class LostItem {
         Class.forName("com.mysql.jdbc.Driver");
         conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kaname_db","root","");
         stm = conn.createStatement();
-        ResultSet rs = stm.executeQuery("select item.itemId ,cate.cateName ,accout.userName ,item.itemName ,item.itenmDes "
-                + ",accout.userID as OwnerId ,accout.userName as Owner_name ,item.DateStart,item.DateEnd "
-                + ",itemstatus.itemStatusDate=max(itemstatus.itemStatusDate) from item INNER JOIN cate ON item.Cate_cateId=cate.cateId"
-                + " INNER JOIN itemstatus ON itemstatus.Item_itemId=item.itemId INNER JOIN accout ON item.Accout_userID=accout.userID"
-                + " GROUP BY item.itemId");                
-//                + "INNER JOIN accout ON item.Accout_userID=accout.userID "+condition);
+        ResultSet rs = stm.executeQuery("select item.itemId ,cate.cateName ,accout.userName ,item.itemName "
+                + ",item.itenmDes ,accout.userID as OwnerId ,accout.userName as Owner_name ,item.DateStart"
+                + ",item.DateEnd ,itemstatus.itemStatusDate from item"
+                + " INNER JOIN cate ON item.Cate_cateId=cate.cateId"
+                + " INNER JOIN itemstatus ON itemstatus.Item_itemId=item.itemId"
+                + " INNER JOIN accout ON itemstatus.Accout_userID=accout.userID"                
+                + " INNER JOIN location ON itemstatus.Location_locationId=location.locationId"
+                + " WHERE (itemstatus.Item_itemId, itemstatus.itemStatusDate)"
+                + " IN (SELECT itemstatus.Item_itemId, Max(itemstatus.itemStatusDate)"
+                + " FROM itemstatus GROUP BY itemstatus.Item_itemId) "+filter
+                + " ORDER BY itemstatus.itemStatusDate "+orderBy);                
         while(rs.next()){
             LostItem tmp = new LostItem();
             tmp.setItemId(rs.getInt("itemId"));
