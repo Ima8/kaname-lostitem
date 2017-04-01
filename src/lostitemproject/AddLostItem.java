@@ -33,7 +33,6 @@ public class AddLostItem {
         
         try {
             itemId = LostItem.addNewLostItem(name,des,accountId,cate,date);
-            System.out.println("itemId return = "+itemId);
             ItemStatus.addStatus(location, itemId, accountId,1);
           
         } catch (SQLException ex) {

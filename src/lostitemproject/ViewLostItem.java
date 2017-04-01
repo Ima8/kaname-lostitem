@@ -40,6 +40,11 @@ public class ViewLostItem {
                     condition+=" AND Location_locationId="+input;                   
                 }
             }
+            System.out.print("===status list===\n0 - All Status\n1 - Lost.\n2 - Found.\n3 - Received\nChoose (number) : ");
+            input=sc.nextInt();
+            if(input!=0){
+                condition+="AND itemstatus.Status_statusId="+input;
+            }
             System.out.print("===Order By===\n1 - Newest First.\n2 - Oldest first.\nChoose (number) : ");
             String orderBy=(sc.nextInt()==1?"DESC":"ASC");
             LostItem item[] = LostItem.getAllLostItem(condition,orderBy);
