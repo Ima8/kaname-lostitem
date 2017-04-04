@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class ViewLostItem {
     public static void run(){
         Scanner sc = new Scanner(System.in);
-        int input,accountId=2;
+        int input,accountId=1;
         try {
             String condition = "";
             System.out.println("1 - View my item\n2 - View all item");

@@ -88,7 +88,7 @@ public class Account {
     
     public boolean login(String username,String password) {
         boolean result=true;
-        if(password.equals(password)){
+        if(password.equals(password/*passwordของ account นี้ใน database*/)){
             result = true;
         }    
         return result;
